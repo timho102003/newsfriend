@@ -37,6 +37,4 @@ while article_idx < len(card_list):
     article_idx += 1
 card_layout.append(dbc.Row(row_))
 
-print(card_layout)
-
 __all__ = ["card_layout"]
