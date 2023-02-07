@@ -1,8 +1,10 @@
 import dash_bootstrap_components as dbc
+
 from config import COUNTRY_LIST
 
 children = [dbc.DropdownMenuItem("More countries", header=True)]
-for country in COUNTRY_LIST: children.append(dbc.DropdownMenuItem(country[0], href=country[1]))
+for country in COUNTRY_LIST:
+    children.append(dbc.DropdownMenuItem(country[0], href=country[1]))
 
 nav_bar = dbc.NavbarSimple(
     children=[
