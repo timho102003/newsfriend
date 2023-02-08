@@ -23,7 +23,7 @@ def form_card(title, imgsrc, ori_link):
     return card_img, card_body
 
 
-def form_layout(margin=10):
+def form_layout(row_style="p-2"):
     card_list = []
     for i in range(len(TEST_NEWS)):
         article = TEST_NEWS.iloc[i, :]
@@ -45,18 +45,18 @@ def form_layout(margin=10):
                     row_,
                     align="center",
                     justify="center",
-                    style={"margin": f"{margin}px"},
+                    class_name=row_style,
                 )
             )
             row_ = []
         row_.append(dbc.Col(card_list[article_idx]))
         article_idx += 1
     card_layout.append(
-        dbc.Row(row_, align="center", justify="center", style={"margin": f"{margin}px"})
+        dbc.Row(row_, align="center", justify="center", class_name=row_style)
     )
     return card_layout
 
 
-card_layout = form_layout(margin=MAINPAGE_ARTICLE_CARD_CONFIG["margin"])
+card_layout = form_layout(row_style=MAINPAGE_ARTICLE_CARD_CONFIG["row_style"])
 
 __all__ = ["card_layout"]

@@ -17,6 +17,6 @@ def concat_path(imgname):
 
 TEST_NEWS["imgname"] = TEST_NEWS["imgname"].apply(concat_path)
 
-MAINPAGE_ARTICLE_CARD_CONFIG = {"margin": 10}
+MAINPAGE_ARTICLE_CARD_CONFIG = {"row_style": "p-2"}
 
 __all__ = [COUNTRY_LIST, TEST_NEWS, MAINPAGE_ARTICLE_CARD_CONFIG]
