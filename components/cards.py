@@ -11,27 +11,36 @@ def form_card(title, imgsrc, ori_link):
     card_body = dbc.CardBody(
         [
             html.H6(title, className="card-title"),
-            dbc.Button(
+        ]
+    )
+    ori_article = dbc.Button(
                 "Original Article",
-                color="primary",
+                color="secondary",
                 external_link=True,
                 href=ori_link,
                 target="_blank",
-            ),
-        ]
-    )
-    return card_img, card_body
+                class_name="p-2 me-2"
+            )
+    read_more = dbc.Button(
+                "Read More",
+                color="primary",
+                external_link=False,
+                target="_blank",
+                class_name="p-2 me-2"
+            )
+    card_footer = dbc.CardFooter(children=[ori_article, read_more])
+    return card_img, card_body, card_footer
 
 
 def form_layout(row_style="p-2"):
     card_list = []
     for i in range(len(TEST_NEWS)):
         article = TEST_NEWS.iloc[i, :]
-        card_img, card_body = form_card(
+        card_img, card_body, card_footer = form_card(
             title=article["title"], imgsrc=article["imgname"], ori_link=article["link"]
         )
         card = dbc.Card(
-            [card_img, card_body],
+            [card_img, card_body, card_footer],
         )
         card_list.append(card)
 
@@ -55,7 +64,6 @@ def form_layout(row_style="p-2"):
         dbc.Row(row_, align="center", justify="center", class_name=row_style)
     )
     return card_layout
-
 
 card_layout = form_layout(row_style=MAINPAGE_ARTICLE_CARD_CONFIG["row_style"])
 
