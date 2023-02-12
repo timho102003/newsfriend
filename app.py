@@ -6,6 +6,7 @@ app = dash.Dash(
     meta_tags=[
         {"name": "viewport", "content": "width=device-width, initial-scale=1.0"}
     ],
+    use_pages=True
 )
 
 server = app.server
