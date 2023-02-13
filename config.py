@@ -1,4 +1,5 @@
 import os
+import numpy as np
 import pandas as pd
 
 # TODO: Conneect to Dataset Country List
@@ -9,6 +10,7 @@ TEST_IMG_ROOT = (
 )
 
 TEST_NEWS = pd.read_csv("test_dataset/test_dataset.csv")
+TEST_NEWS = TEST_NEWS.replace(np.nan, None)
 
 def concat_path(imgname):
     return os.path.join(TEST_IMG_ROOT, imgname)
