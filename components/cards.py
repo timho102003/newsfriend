@@ -6,7 +6,7 @@ from config import MAINPAGE_ARTICLE_CARD_CONFIG, TEST_NEWS
 MAX_COLS = 4
 
 
-def form_card(title, imgsrc, ori_link):
+def form_card(title, imgsrc, ori_link, id):
     card_img = dbc.CardImg(src=imgsrc, top=True)
     card_body = dbc.CardBody(
         [
@@ -24,7 +24,8 @@ def form_card(title, imgsrc, ori_link):
     read_more = dbc.Button(
                 "Read More",
                 color="primary",
-                external_link=False,
+                external_link=True,
+                href=f"news_id_{id}",
                 target="_blank",
                 class_name="p-2 me-2"
             )
@@ -37,7 +38,7 @@ def form_layout(row_style="p-2"):
     for i in range(len(TEST_NEWS)):
         article = TEST_NEWS.iloc[i, :]
         card_img, card_body, card_footer = form_card(
-            title=article["title"], imgsrc=article["imgname"], ori_link=article["link"]
+            title=article["title"], imgsrc=article["imgname"], ori_link=article["link"], id=i
         )
         card = dbc.Card(
             [card_img, card_body, card_footer],
