@@ -20,10 +20,7 @@ if db_cfg["news_api"]["dateStart"] == -1 or db_cfg["news_api"]["dateEnd"] == -1:
     db_cfg["news_api"]["dateStart"] = the_day_before_yesterday.strftime("%Y-%m-%d")
     db_cfg["news_api"]["dateEnd"] = yesterday.strftime("%Y-%m-%d")
 
-print(db_cfg["news_api"]["dateStart"])
-print(db_cfg["news_api"]["dateEnd"])
 for lang in db_cfg["news_api"]["language"]:
-    print("current_language: ", lang)
     endpoint = db_cfg["news_api"]["getArticleEndpoint"]
     params = {
         "apiKey": auth_db.get_news_api_key(username=db_cfg["news_api"]["api_key_name"]),
@@ -44,12 +41,7 @@ for lang in db_cfg["news_api"]["language"]:
     # Check the response status code
     if response.status_code == 200:
         data = response.json()
-        import json
-        with open(f"{lang}_20230211_20230212.json", "w") as f:
-            json.dump(data, f)
         data = data["articles"]["results"]
         news_api_db.collection.insert_many(data)
-        
     else:
-        # Print the error message
         print("Request failed with status code:", response.status_code)
