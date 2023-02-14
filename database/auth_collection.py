@@ -1,4 +1,4 @@
-from base_collection import BaseMongoDBCollection
+from .base_collection import BaseMongoDBCollection
 
 
 class AuthCollection(BaseMongoDBCollection):

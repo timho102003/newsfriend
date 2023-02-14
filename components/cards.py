@@ -1,13 +1,18 @@
+from global_var import article_database
 import dash_bootstrap_components as dbc
 from dash import html
-
-from config import MAINPAGE_ARTICLE_CARD_CONFIG, TEST_NEWS
+from config import COUNTRY_LIST, NO_IMG_URL
 
 MAX_COLS = 4
 
 
-def form_card(title, imgsrc, ori_link, id):
-    card_img = dbc.CardImg(src=imgsrc, top=True)
+def form_card(title, imgsrc, ori_link, lang, id):
+    country = list(filter(lambda x: x[1] == lang, COUNTRY_LIST))[0][0]
+    card_img = dbc.CardImg(src=imgsrc, top=True, style={
+        "width": "100%",
+        "height": "100%",
+        "object-fit": "hidden"
+    })
     card_body = dbc.CardBody(
         [
             html.H6(title, className="card-title"),
@@ -25,7 +30,7 @@ def form_card(title, imgsrc, ori_link, id):
         "Read More",
         color="primary",
         external_link=True,
-        href=f"news_id_{id}",
+        href=f"{country}/news_id_{id}",
         target="_blank",
         class_name="p-2 me-2",
     )
@@ -33,18 +38,25 @@ def form_card(title, imgsrc, ori_link, id):
     return card_img, card_body, card_footer
 
 
-def form_layout(row_style="p-2"):
+def form_layout(row_style="p-2", lang=""):
     card_list = []
-    for i in range(len(TEST_NEWS)):
-        article = TEST_NEWS.iloc[i, :]
+    articles = article_database.retrieve_article(lang=lang)
+    # print(f"length: {len(articles)}")
+    for article in articles:
+        # print(article)
         card_img, card_body, card_footer = form_card(
             title=article["title"],
-            imgsrc=article["imgname"],
-            ori_link=article["link"],
-            id=i,
+            imgsrc=article["image"] if article["image"] is not None else NO_IMG_URL,
+            ori_link=article["url"],
+            lang=lang,
+            id=article["_id"],
         )
         card = dbc.Card(
-            [card_img, card_body, card_footer],
+            [card_img, card_body, card_footer], style={
+                "width": "600",
+                "height": "400",
+                "overflow": "hidden"
+            }
         )
         card_list.append(card)
 
@@ -70,6 +82,4 @@ def form_layout(row_style="p-2"):
     return card_layout
 
 
-card_layout = form_layout(row_style=MAINPAGE_ARTICLE_CARD_CONFIG["row_style"])
-
-__all__ = ["card_layout"]
+__all__ = ["card_layout", "form_layout"]

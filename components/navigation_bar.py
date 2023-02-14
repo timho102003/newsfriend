@@ -1,19 +1,25 @@
+import dash
 import dash_bootstrap_components as dbc
 
-from config import COUNTRY_LIST
+# from config import COUNTRY_LIST
 
 children = [dbc.DropdownMenuItem("More countries", header=True)]
-for country in COUNTRY_LIST:
-    children.append(dbc.DropdownMenuItem(country[0], href=country[1]))
+
+children += [
+    dbc.DropdownMenuItem(page["name"], href=page["path"])
+    for page in dash.page_registry.values()
+    if page["module"] not in ["pages.not_found_404", "pages.main_page", "pages.blog_content"]
+]
 
 nav_bar = dbc.NavbarSimple(
     children=[
-        dbc.NavItem(dbc.NavLink("United States", href="#")),
+        dbc.NavItem(dbc.NavLink("United State", href="/")),
         dbc.DropdownMenu(
             children=children,
             nav=True,
             in_navbar=True,
             label="More",
+            
         ),
     ],
     brand="NewsFriend",

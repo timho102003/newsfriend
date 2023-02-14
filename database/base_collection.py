@@ -1,7 +1,6 @@
 import pymongo
 
-
-class BaseMongoDBCollection:
+class BaseMongoDBCollection(object):
     def __init__(
         self, ip_address, port=27018, database_name="newsfriend", collection_name=None
     ):
