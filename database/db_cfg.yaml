@@ -1,0 +1,20 @@
+mongodb:
+  ip_address: "localhost"
+  port: 27018
+  database_name: "newsfriend"
+  auth_collection_name: "authentication"
+  news_collection_name: "news_collection"
+news_api:
+  api_key_name: "timho102003"
+  language: ["kor", "jpn", "fra", "zho", "eng"]
+  articlesSortBy: "date"
+  articlesArticleBodyLen: -1
+  resultType: "articles"
+  dataType: ["news"]
+  articlesPage: 1
+  articlesCount: 200
+  dateStart: -1
+  dateEnd: -1
+  getArticleEndpoint: "http://eventregistry.org/api/v1/article/getArticles"
+
+  
