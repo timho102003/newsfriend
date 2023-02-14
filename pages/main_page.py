@@ -1,4 +1,5 @@
 import dash
+
 from components.cards import card_layout
 
 dash.register_page(__name__, path="/", order=0)

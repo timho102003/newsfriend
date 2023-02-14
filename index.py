@@ -1,7 +1,8 @@
 import dash
+import dash_bootstrap_components as dbc
+
 from app import app
 from components.navigation_bar import nav_bar
-import dash_bootstrap_components as dbc
 
 app.layout = dbc.Container(
     [
