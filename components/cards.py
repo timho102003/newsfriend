@@ -1,19 +1,22 @@
-from global_var import article_database
 import dash_bootstrap_components as dbc
 from dash import html
+
 from config import COUNTRY_LIST, NO_IMG_URL
+from global_var import article_database
 
 MAX_COLS = 4
 
 
 def form_card(title, imgsrc, ori_link, lang, id):
     country = list(filter(lambda x: x[1] == lang, COUNTRY_LIST))[0][0]
-    card_img = dbc.CardImg(src=imgsrc, top=True, style={"height": "300px", "object-fit": "cover"})
+    card_img = dbc.CardImg(
+        src=imgsrc, top=True, style={"height": "300px", "object-fit": "cover"}
+    )
     card_body = dbc.CardBody(
         [
             html.H6(title, className="card-title"),
-        ]
-        , style={"height": "100px", "object-fit": "cover"}
+        ],
+        style={"height": "100px", "object-fit": "cover"},
     )
     ori_article = dbc.Button(
         "Original Article",
@@ -49,7 +52,9 @@ def form_layout(row_style="p-2", lang=""):
             id=article["_id"],
         )
         card = dbc.Card(
-            [card_img, card_body, card_footer], style={"height": "600px", "width": "400ox"}, className = "h-25 w-100 mb-3"
+            [card_img, card_body, card_footer],
+            style={"height": "600px", "width": "400ox"},
+            className="h-25 w-100 mb-3",
         )
         card_list.append(card)
 
@@ -68,9 +73,7 @@ def form_layout(row_style="p-2", lang=""):
             row_ = []
         row_.append(dbc.Col(card_list[article_idx]))
         article_idx += 1
-    card_layout.append(
-        dbc.Row(row_, align="center", justify="center")
-    )
+    card_layout.append(dbc.Row(row_, align="center", justify="center"))
     return card_layout
 
 

@@ -8,7 +8,15 @@ class ArticleCollection(BaseMongoDBCollection):
         super().__init__(ip_address, port, database_name, collection_name)
 
     def retrieve_article(self, lang=None, _id=None):
-        projection = {"dateTimePub":True, "title":True, "body": True, "authors": True, "image": True, "_id": True, "url": True}
+        projection = {
+            "dateTimePub": True,
+            "title": True,
+            "body": True,
+            "authors": True,
+            "image": True,
+            "_id": True,
+            "url": True,
+        }
         if lang is not None and _id is not None:
             query = {"lang": lang, "_id": _id}
             func = "find"

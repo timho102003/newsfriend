@@ -1,8 +1,13 @@
-import pytz
 from datetime import datetime
+
+import pytz
+
 from config import TIMEZONE
 
-def convert_timezone(time=None, format="%Y-%m-%dT%H:%M:%SZ", ori_timezone=None, desire_timezone=TIMEZONE):
+
+def convert_timezone(
+    time=None, format="%Y-%m-%dT%H:%M:%SZ", ori_timezone=None, desire_timezone=TIMEZONE
+):
     date_time = datetime.strptime(time, "%Y-%m-%dT%H:%M:%SZ")
     ori_timezone = pytz.timezone(ori_timezone)
     date_time = ori_timezone.localize(date_time)

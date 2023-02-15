@@ -4,7 +4,13 @@ import numpy as np
 import pandas as pd
 
 # TODO: Conneect to Dataset Country List
-COUNTRY_LIST = [("us", "eng", "America/Los_Angeles"), ("korea", "kor", "Asia/Seoul"), ("japan", "jpn", 'Asia/Tokyo'), ("france", "fra", 'Europe/Paris'), ("taiwan&china", "zho", 'Asia/Taipei')]
+COUNTRY_LIST = [
+    ("us", "eng", "America/Los_Angeles"),
+    ("korea", "kor", "Asia/Seoul"),
+    ("japan", "jpn", "Asia/Tokyo"),
+    ("france", "fra", "Europe/Paris"),
+    ("taiwan&china", "zho", "Asia/Taipei"),
+]
 
 # TEST_IMG_ROOT = "./assets/imgs"
 

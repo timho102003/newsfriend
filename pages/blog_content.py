@@ -1,11 +1,13 @@
 import dash
+from bson import ObjectId
 from dash import html
 
+from config import COUNTRY_LIST
 from global_var import article_database
 from util import convert_timezone
-from config import COUNTRY_LIST
-from bson import ObjectId
+
 dash.register_page(__name__, path_template="<country>/news_id_<article_id>")
+
 
 def layout(country=None, article_id=None):
     ori_tz = list(filter(lambda x: x[0] == country, COUNTRY_LIST))[0][2]
@@ -13,10 +15,17 @@ def layout(country=None, article_id=None):
     meta_info = ""
     author = ""
     if selected_article["authors"]:
-        author = [auth["name"] for auth in selected_article["authors"] if auth["type"]=="author"]
-        if author: author = ",".join(author)
+        author = [
+            auth["name"]
+            for auth in selected_article["authors"]
+            if auth["type"] == "author"
+        ]
+        if author:
+            author = ",".join(author)
     update_time = (
-        convert_timezone(str(selected_article["dateTimePub"]), ori_timezone=ori_tz) if selected_article["dateTimePub"] else ""
+        convert_timezone(str(selected_article["dateTimePub"]), ori_timezone=ori_tz)
+        if selected_article["dateTimePub"]
+        else ""
     )
     meta_info += (
         f"Author: {author} | "
@@ -33,11 +42,7 @@ def layout(country=None, article_id=None):
         if selected_article["body"] is not None
         else "Article content fail to retrieve"
     )
-    img_src = (
-        selected_article["image"]
-        if selected_article["image"]
-        else None
-    )
+    img_src = selected_article["image"] if selected_article["image"] else None
 
     if img_src:
         image_with_caption = html.Div(
@@ -48,8 +53,10 @@ def layout(country=None, article_id=None):
                 ),
                 html.Div(
                     style={"text-align": "center", "font-size": "0.5em"},
-                    children=[html.P(f"reference link: {img_src}", style={"margin": 0})],
-                )
+                    children=[
+                        html.P(f"reference link: {img_src}", style={"margin": 0})
+                    ],
+                ),
             ]
         )
     else:
