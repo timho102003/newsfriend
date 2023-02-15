@@ -3,7 +3,7 @@ from dash import html
 
 from global_var import article_database
 from util import convert_timezone
-from config import COUNTRY_LIST, NO_IMG_URL
+from config import COUNTRY_LIST
 from bson import ObjectId
 dash.register_page(__name__, path_template="<country>/news_id_<article_id>")
 
@@ -14,7 +14,7 @@ def layout(country=None, article_id=None):
     author = ""
     if selected_article["authors"]:
         author = [auth["name"] for auth in selected_article["authors"] if auth["type"]=="author"]
-        if author: author = ",".join(selected_article["authors"])
+        if author: author = ",".join(author)
     update_time = (
         convert_timezone(str(selected_article["dateTimePub"]), ori_timezone=ori_tz) if selected_article["dateTimePub"] else ""
     )
