@@ -41,9 +41,7 @@ def form_card(title, imgsrc, ori_link, lang, id):
 def form_layout(row_style="p-2", lang=""):
     card_list = []
     articles = article_database.retrieve_article(lang=lang)
-    # print(f"length: {len(articles)}")
     for article in articles:
-        # print(article)
         card_img, card_body, card_footer = form_card(
             title=article["title"],
             imgsrc=article["image"] if article["image"] is not None else NO_IMG_URL,
