@@ -1,3 +1,5 @@
+import pymongo
+
 from .base_collection import BaseMongoDBCollection
 
 
@@ -24,11 +26,14 @@ class ArticleCollection(BaseMongoDBCollection):
         elif lang is not None:
             query = {"lang": lang}
             func = "find"
-            return list(getattr(self.collection, func)(query, projection))
+            return list(
+                getattr(self.collection, func)(query, projection).sort(
+                    "dateTimePub", pymongo.ASCENDING
+                )
+            )
         elif _id is not None:
             query = {"_id": _id}
             func = "find_one"
             return dict(getattr(self.collection, func)(query, projection))
         else:
             raise Exception
-        return list(getattr(self.collection, func)(query, projection))
