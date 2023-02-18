@@ -28,7 +28,7 @@ class ArticleCollection(BaseMongoDBCollection):
             func = "find"
             return list(
                 getattr(self.collection, func)(query, projection).sort(
-                    "dateTimePub", pymongo.ASCENDING
+                    "dateTimePub", pymongo.DESCENDING
                 )
             )
         elif _id is not None:
