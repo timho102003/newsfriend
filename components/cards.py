@@ -1,4 +1,5 @@
 import random
+
 import dash_bootstrap_components as dbc
 from dash import html
 
@@ -11,7 +12,14 @@ MAX_COLS = 4
 def form_card(title, imgsrc, ori_link, lang, id):
     country = list(filter(lambda x: x[1] == lang, COUNTRY_LIST))[0][0]
     card_img = dbc.CardImg(
-        src=imgsrc, top=True, style={"height": "300px", "object-fit": "cover", "borderTopLeftRadius": "40px", "borderTopRightRadius": "40px"}
+        src=imgsrc,
+        top=True,
+        style={
+            "height": "300px",
+            "object-fit": "cover",
+            "borderTopLeftRadius": "40px",
+            "borderTopRightRadius": "40px",
+        },
     )
     card_body = dbc.CardBody(
         [
@@ -25,7 +33,7 @@ def form_card(title, imgsrc, ori_link, lang, id):
         external_link=True,
         href=ori_link,
         target="_blank",
-        class_name="p-1 me-3 mx-auto"
+        class_name="p-1 me-3 mx-auto",
     )
     read_more = dbc.Button(
         "Read More",
@@ -33,9 +41,19 @@ def form_card(title, imgsrc, ori_link, lang, id):
         external_link=True,
         href=f"{country}/news_id_{id}",
         target="_blank",
-        class_name="p-1 me-3 mx-auto"
+        class_name="p-1 me-3 mx-auto",
     )
-    card_footer = dbc.CardFooter(children=[ori_article, read_more], style={"height": "75px", "borderRadius": "0px 0px 40px 40px", "position": "absolute", "bottom": "0", "left": "0px", "right": "0px"})
+    card_footer = dbc.CardFooter(
+        children=[ori_article, read_more],
+        style={
+            "height": "75px",
+            "borderRadius": "0px 0px 40px 40px",
+            "position": "absolute",
+            "bottom": "0",
+            "left": "0px",
+            "right": "0px",
+        },
+    )
     return card_img, card_body, card_footer
 
 
@@ -45,12 +63,19 @@ def form_layout(row_style="p-2", lang=""):
     for a_i, article in enumerate(articles):
         card_img, card_body, card_footer = form_card(
             title=article["title"],
-            imgsrc=article["image"] if article["image"] is not None else NO_IMG_URL.format(random.randint(6, 10)),
+            imgsrc=article["image"]
+            if article["image"] is not None
+            else NO_IMG_URL.format(random.randint(6, 10)),
             ori_link=article["url"],
             lang=lang,
             id=article["_id"],
         )
-        card_style = {"height": "650px", "width": "500px", "borderRadius": "50px", "overflow": "hidden"}
+        card_style = {
+            "height": "650px",
+            "width": "500px",
+            "borderRadius": "50px",
+            "overflow": "hidden",
+        }
         if a_i // MAX_COLS == 0:
             card_style.update({"marginTop": "30px"})
         card = dbc.Card(
