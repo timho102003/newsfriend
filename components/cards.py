@@ -98,7 +98,12 @@ def form_layout(row_style="p-2", lang=""):
                 )
             )
             row_ = []
-        row_.append(dbc.Col(card_list[article_idx]))
+        col_style = {}
+        if article_idx % MAX_COLS == 0:
+            col_style ={"marginLeft": "100px"}
+        if article_idx % MAX_COLS == MAX_COLS-1:
+            col_style ={"marginRight": "100px"}
+        row_.append(dbc.Col(card_list[article_idx], style=col_style))
         article_idx += 1
     card_layout.append(dbc.Row(row_, align="center", justify="center"))
     return card_layout

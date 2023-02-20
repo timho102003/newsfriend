@@ -26,6 +26,15 @@ nav_bar = dbc.NavbarSimple(
     brand_href="#",
     color="primary",
     dark=True,
+    style={
+            "height": "80px",
+            # "object-fit": "cover",
+            "borderBottomLeftRadius": "40px",
+            "borderBottomRightRadius": "40px",
+            "margin-left": "50px",
+            "margin-right": "50px",
+            "font-size": "20px"
+    }
 )
 
 __all__ = ["nav_var"]

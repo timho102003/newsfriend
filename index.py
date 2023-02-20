@@ -11,6 +11,13 @@ app.layout = dbc.Container(
     ],
     className="dbc",
     fluid=True,
+    # style={
+    #             "background-image": "url('/assets/imgs/newsfriend_banner_v2.png')",
+    #             "background-size": "cover",
+    #             "background-position": "center",
+    #             "height": "400px",
+    #             "position": "relative",
+    #         },
 )
 
 if __name__ == "__main__":
