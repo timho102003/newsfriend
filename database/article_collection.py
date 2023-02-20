@@ -18,6 +18,7 @@ class ArticleCollection(BaseMongoDBCollection):
             "image": True,
             "_id": True,
             "url": True,
+            "source.uri": True
         }
         if lang is not None and _id is not None:
             query = {"lang": lang, "_id": _id}
