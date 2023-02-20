@@ -1,12 +1,34 @@
 import dash
-
+import dash_core_components as dcc
+import dash_html_components as html
 from components.cards import form_layout
+from dash.dependencies import Input, Output
 from config import MAINPAGE_ARTICLE_CARD_CONFIG
 
 language = "kor"
 
 dash.register_page(__name__, path="/korea")
-card_layout = form_layout(
-    row_style=MAINPAGE_ARTICLE_CARD_CONFIG["row_style"], lang=language
-)
-layout = dash.html.Div([*card_layout], className="pad-row")
+
+layout = html.Div([
+    dcc.Location(id='kor-url', refresh=False),
+    dcc.Store(id='kor-page-store', data=1),
+    html.Div(id='kor-card-layout')
+])
+
+@dash.callback(Output('kor-card-layout', 'children'),
+              [Input('kor-url', 'pathname'), Input('kor-page-store', 'data')])
+def display_page(pathname, page):
+    if page is None:
+        page = 1
+    card_layout = form_layout(
+        row_style=MAINPAGE_ARTICLE_CARD_CONFIG["row_style"],
+        lang=language,
+        page=page
+    )
+    return html.Div([*card_layout], className="pad-row")
+
+@dash.callback(Output('kor-page-store', 'data'),
+              [Input('pagination', 'active_page')])
+def update_page(active_page):
+    return active_page
+

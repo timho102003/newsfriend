@@ -1,3 +1,4 @@
+import math
 import random
 
 import dash_bootstrap_components as dbc
@@ -7,6 +8,7 @@ from config import COUNTRY_LIST, NO_IMG_URL
 from global_var import article_database
 
 MAX_COLS = 4
+CARDS_PER_PAGE = 28
 
 
 def form_card(title, imgsrc, ori_link, lang, id):
@@ -57,10 +59,12 @@ def form_card(title, imgsrc, ori_link, lang, id):
     return card_img, card_body, card_footer
 
 
-def form_layout(row_style="p-2", lang=""):
+def form_layout(page=1, row_style="p-2", lang=""):
+    start_idx = (page - 1) * CARDS_PER_PAGE
+    end_idx = page * CARDS_PER_PAGE
     card_list = []
     articles = article_database.retrieve_article(lang=lang)
-    for a_i, article in enumerate(articles):
+    for a_i, article in enumerate(articles[start_idx:end_idx]):
         card_img, card_body, card_footer = form_card(
             title=article["title"],
             imgsrc=article["image"]
@@ -105,8 +109,24 @@ def form_layout(row_style="p-2", lang=""):
             col_style ={"marginRight": "100px"}
         row_.append(dbc.Col(card_list[article_idx], style=col_style))
         article_idx += 1
+    
+    # Add pagination
+    total_pages = int((len(articles) - 1) / CARDS_PER_PAGE) + 1  # Calculate total number of pages
+    pagination_layout = dbc.Pagination(
+        id='pagination',
+        step=1,
+        active_page=page,
+        max_value=total_pages,
+        first_last=True,
+        previous_next=True,
+        fully_expanded=False,
+        className="my-4",
+        style={"justify-content": "center"}
+    )
     card_layout.append(dbc.Row(row_, align="center", justify="center"))
+    card_layout.append(dbc.Row(dbc.Col(pagination_layout)))
     return card_layout
+
 
 
 __all__ = ["card_layout", "form_layout"]
