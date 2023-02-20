@@ -27,11 +27,14 @@ def layout(country=None, article_id=None):
         if selected_article["dateTimePub"]
         else ""
     )
-    meta_info += (
-        f"Author: {author} | "
-        if author
-        else "Author: Please refer to the original link | "
-    )
+
+    if author:
+        meta_info += f"Author: {author} | "
+    elif "uri" in selected_article:
+        meta_info += "Author: {} | ".format(selected_article["uri"])
+    else:
+        "Author: None | "
+
     meta_info += (
         f"Published: {update_time}"
         if update_time
@@ -49,21 +52,39 @@ def layout(country=None, article_id=None):
             [
                 html.Img(
                     src=img_src,
-                    style={"display": "block", "margin": "0 auto", "width": "50%"},
+                    style={"display": "block", "margin": "0 auto", "max-width": "100%"},
                 ),
                 html.Div(
                     style={"text-align": "center", "font-size": "0.5em"},
-                    children=[
-                        html.P(f"reference link: {img_src}", style={"margin": 0})
-                    ],
+                    children=[                        html.P(f"reference link: {img_src}", style={"margin": 0})                    ],
                 ),
-            ]
+            ],
+            style={"max-width": "50em", "margin": "2em auto"},
         )
     else:
         image_with_caption = html.Div([])
 
-    article_list = [html.P(meta_info), image_with_caption, body_content]
-    # for content in body_content:
-    #     article_list.append(html.P(content, style={"margin": "1em 50"}))
-    article = html.Div([*article_list])
-    return html.Div(children=[html.H1(children=selected_article["title"]), article])
+    article_sections = [
+        
+        {
+            "content": selected_article["body"] if selected_article["body"] else ""
+        }
+    ]
+
+    sections = []
+    for section in article_sections:
+        section_content = html.Div(
+            section['content'],
+            style={"text-align": "justify", "line-height": "1.5em", "margin-bottom": "2em"}
+        )
+        if section['content']:
+            sections.append(section_content)
+
+    article_list = [
+        html.P(meta_info, style={"text-align": "right"}),
+        html.H1(selected_article["title"], style={"margin-top": "0.5em"}),
+        image_with_caption,
+        *sections
+    ]
+    article = html.Div(article_list, style={"max-width": "50em", "margin": "2em auto"})
+    return html.Div(children=[article], style={"text-align": "center"})
